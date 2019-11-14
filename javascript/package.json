@@ -1,0 +1,21 @@
+{
+  "name": "rwidget",
+  "version": "1.0.0",
+  "description": "Pipe data from R to JavaScript Libs.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack src/index.js --mode production -o ../inst/dist/rwidget.js",
+    "build-dev": "webpack src/index.js --mode development -o ../inst/dist/rwidget.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rwidget",
+    "html"
+  ],
+  "author": "Stefan Kuethe",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

@@ -1,0 +1,5 @@
+^LICENSE\.md$
+^rwidget\.Rproj$
+^\.Rproj\.user$
+javascript/
+node_modules/
