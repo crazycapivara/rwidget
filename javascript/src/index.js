@@ -1,8 +1,6 @@
 import CONFIG from "./config";
 import testWidget from "./test-widget";
 
-console.log("Pipe data from R to JavaScript.");
-
 const widgets = { };
 
 /**
@@ -16,33 +14,48 @@ function register(props) {
   widgets[props.name] = props;
 }
 
+// TODO: Pass widget name via data arg
 function getData(widgetDataElement) {
   const data = JSON.parse(widgetDataElement.dataset.widgetData);
   return {
     id: widgetDataElement.id,
-    name: widgetDataElement.className.replace(`${CONFIG.widgetTag}-`, ""),
+    widgetName: widgetDataElement.className.replace(`${CONFIG.widgetTag}-`, ""),
     widgetData: data
   };
 }
 
 function make(widgetDataElement) {
   const data = getData(widgetDataElement);
+  if (!Object.keys(widgets).includes(data.widgetName)) {
+    console.log(`widget "${data.widgetName}" not registered`);
+    return;
+  }
+
   const widgetElement = document.createElement("div");
   widgetElement.id = data.id;
   document.body.appendChild(widgetElement);
-  return { data: data.widgetData, widgetElement: widgetElement };
+  const makeWidget = widgets[data.widgetName].type;
+  makeWidget(widgetElement).render(data.widgetData);
 }
 
-function run(test) {
-  if (test) {
-    const widgetDataElement = document.getElementsByTagName("rwidget")[0];
-    const args = make(widgetDataElement);
-    const widget = testWidget(args.widgetElement);
-    widget.render(args.data);
-    return;
+function run() {
+  const widgetDataElements = document.getElementsByTagName(CONFIG.widgetTag);
+  for (let i = 0; i < widgetDataElements.length; i++) {
+    make(widgetDataElements[i]);
   }
 }
 
+// Register test widget
+register({
+  name: "test",
+  type: testWidget
+});
+
+document.addEventListener('DOMContentLoaded', (e) => {
+  run();
+});
+
+// Only for testing, usually only 'register' should be available in the global context
 global.rwidget = {
   register: register,
   getData: getData,
