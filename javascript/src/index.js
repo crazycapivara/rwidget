@@ -1,5 +1,6 @@
 import CONFIG from "./config";
 import testWidget from "./test-widget";
+import app from "./widget";
 
 const widgets = { };
 
@@ -45,6 +46,14 @@ function run() {
   }
 }
 
+function run2() {
+  const makeWidget = app(widgets);
+  const widgetElements = document.getElementsByClassName("rwidget");
+  for (let i = 0; i < widgetElements.length; i++) {
+    makeWidget(widgetElements[i]);
+  }
+}
+
 // Register test widget
 register({
   name: "test",
@@ -52,7 +61,8 @@ register({
 });
 
 document.addEventListener('DOMContentLoaded', (e) => {
-  run();
+  // run();
+  run2();
 });
 
 // Only for testing, usually only 'register' should be available in the global context
@@ -64,5 +74,6 @@ global.rwidget = {
 };
 
 global._rwidget = {
-  widgets: widgets
+  widgets: widgets,
+  app: app
 };
