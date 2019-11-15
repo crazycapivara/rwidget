@@ -97,18 +97,6 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 
 /***/ }),
 
-/***/ "./src/config.js":
-/*!***********************!*\
-  !*** ./src/config.js ***!
-  \***********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  widgetTag: \"rwidget\"\n});\n\n\n//# sourceURL=webpack:///./src/config.js?");
-
-/***/ }),
-
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -117,7 +105,19 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./config */ \"./src/config.js\");\n/* harmony import */ var _test_widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./test-widget */ \"./src/test-widget.js\");\n/* harmony import */ var _widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./widget */ \"./src/widget.js\");\n\n\n\n\nconst widgets = { };\n\n/**\n * Register a widget object\n * @param props properties\n * @param props.name class/widget name\n * @param props.type class or factory function\n * ...\n */\nfunction register(props) {\n  widgets[props.name] = props;\n}\n\n// TODO: Pass widget name via data arg\nfunction getData(widgetDataElement) {\n  const data = JSON.parse(widgetDataElement.dataset.widgetData);\n  return {\n    id: widgetDataElement.id,\n    widgetName: widgetDataElement.className.replace(`${_config__WEBPACK_IMPORTED_MODULE_0__[\"default\"].widgetTag}-`, \"\"),\n    widgetData: data\n  };\n}\n\nfunction make(widgetDataElement) {\n  const data = getData(widgetDataElement);\n  if (!Object.keys(widgets).includes(data.widgetName)) {\n    console.log(`widget \"${data.widgetName}\" not registered`);\n    return;\n  }\n\n  const widgetElement = document.createElement(\"div\");\n  widgetElement.id = data.id;\n  document.body.appendChild(widgetElement);\n  const makeWidget = widgets[data.widgetName].type;\n  makeWidget(widgetElement).render(data.widgetData);\n}\n\nfunction run() {\n  const widgetDataElements = document.getElementsByTagName(_config__WEBPACK_IMPORTED_MODULE_0__[\"default\"].widgetTag);\n  for (let i = 0; i < widgetDataElements.length; i++) {\n    make(widgetDataElements[i]);\n  }\n}\n\nfunction run2() {\n  const makeWidget = Object(_widget__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(widgets);\n  const widgetElements = document.getElementsByClassName(\"rwidget\");\n  for (let i = 0; i < widgetElements.length; i++) {\n    makeWidget(widgetElements[i]);\n  }\n}\n\n// Register test widget\nregister({\n  name: \"test\",\n  type: _test_widget__WEBPACK_IMPORTED_MODULE_1__[\"default\"]\n});\n\ndocument.addEventListener('DOMContentLoaded', (e) => {\n  // run();\n  run2();\n});\n\n// Only for testing, usually only 'register' should be available in the global context\nglobal.rwidget = {\n  register: register,\n  getData: getData,\n  make: make,\n  run: run\n};\n\nglobal._rwidget = {\n  widgets: widgets,\n  app: _widget__WEBPACK_IMPORTED_MODULE_2__[\"default\"]\n};\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _rwidget__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rwidget */ \"./src/rwidget.js\");\n/* harmony import */ var _test_widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./test-widget */ \"./src/test-widget.js\");\n\n\n\nglobal.rwidget = _rwidget__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n\n// Register test widget\n_rwidget__WEBPACK_IMPORTED_MODULE_0__[\"default\"].register({\n  name: \"test\",\n  type: _test_widget__WEBPACK_IMPORTED_MODULE_1__[\"default\"]\n});\n\ndocument.addEventListener('DOMContentLoaded', (e) => {\nconst scriptElements = document.getElementsByClassName(\"rwidget\");\n  for (let i = 0; i < scriptElements.length; i++) {\n    _rwidget__WEBPACK_IMPORTED_MODULE_0__[\"default\"].make(scriptElements[i]);\n  }\n});\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/rwidget.js":
+/*!************************!*\
+  !*** ./src/rwidget.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nconst widgets = { };\n\n/**\n * Register a widget object\n * @param props properties\n * @param props.name class/widget name\n * @param props.type class or factory function\n * ...\n */\nfunction register(props) {\n  widgets[props.name] = props;\n}\n\nfunction make(scriptElement) {\n  const data = JSON.parse(scriptElement.innerText);\n  const widgetName = scriptElement.classList[1];\n  if (!Object.keys(widgets).includes(widgetName)) {\n    console.log(`widget \"${data.widgetName}\" not registered`);\n    return;\n  }\n\n  const widgetElement = document.createElement(\"div\");\n  widgetElement.id = scriptElement.id.replace(\"data-\", \"\");\n  document.body.appendChild(widgetElement);\n  const makeWidget = widgets[widgetName].type;\n  makeWidget(widgetElement).render(data);\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  register: register,\n  make: make,\n  widgets: widgets\n});\n\n\n//# sourceURL=webpack:///./src/rwidget.js?");
 
 /***/ }),
 
@@ -130,18 +130,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(f
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (function(widgetElement) {\n  const widget = { };\n\n  widget.render = function(widgetData) {\n    console.log(widgetElement.id);\n    console.log(widgetData);\n    widgetElement.innerText = \"Hello widget!\";\n  };\n\n  return widget;\n\n});\n\n\n//# sourceURL=webpack:///./src/test-widget.js?");
-
-/***/ }),
-
-/***/ "./src/widget.js":
-/*!***********************!*\
-  !*** ./src/widget.js ***!
-  \***********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (function(widgets) {\n  // Uses 'div' tag in R instead of 'rwidget' tag\n  return function (widgetElement) {\n    const widgetData = JSON.parse(widgetElement.dataset.widgetData);\n    const widgetName = widgetElement.classList[1];\n    if (!Object.keys(widgets).includes(widgetName)) {\n      console.log(`widget \"${widgetName}\" not registered`);\n      return;\n    }\n\n    const makeWidget = widgets[widgetName].type;\n    makeWidget(widgetElement).render(widgetData);\n  };\n});\n\n\n//# sourceURL=webpack:///./src/widget.js?");
 
 /***/ })
 
