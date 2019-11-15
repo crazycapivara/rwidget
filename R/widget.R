@@ -23,13 +23,6 @@ write_html <- function(widget, output_folder = tempdir()) {
 
 make_widget_tag <- function(widget) {
   json_data <- jsonlite::toJSON(widget$dataset, auto_unbox = TRUE, force = TRUE)
-  #sprintf(
-  #  "<rwidget id='%s' class='rwidget-%s' data-widget-data='%s'></rwidget>",
-  #  "<div id='%s' class='rwidget %s' data-widget-data='%s'></div>",
-  #  widget$element_id,
-  #  widget$name,
-  #  json_data
-  #)
   data_tag <- htmltools::tags$script(
     type = "rwidget",
     id = paste0("data-", widget$element_id),
