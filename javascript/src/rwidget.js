@@ -15,7 +15,7 @@ function make(scriptElement) {
   const data = JSON.parse(scriptElement.innerText);
   const widgetName = scriptElement.classList[1];
   if (!Object.keys(widgets).includes(widgetName)) {
-    console.log(`widget "${data.widgetName}" not registered`);
+    console.log(`widget "${widgetName}" not registered`);
     return;
   }
 

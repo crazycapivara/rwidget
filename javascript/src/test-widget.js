@@ -8,5 +8,4 @@ export default function(widgetElement) {
   };
 
   return widget;
-
 }
