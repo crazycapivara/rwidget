@@ -1,31 +1,31 @@
-.widget_lib <- system.file("dist/rwidget.js", package = utils::packageName())
-.template <- system.file("templates/index.html", package = utils::packageName())
-
 #' @export
 make_widget <- function(name, data, element_id) {
-  dataset <- list(
-    data = data,
-    elementId = element_id
+  structure(
+    list(
+      name = name,
+      element_id = element_id,
+      dataset = data
+    ),
+    class = "rwidget"
   )
-  json_data <- jsonlite::toJSON(dataset, auto_unbox = TRUE)
-  tag <- sprintf(
-    "<rwidget id='%s' class='rwidget-%s' data-widget-data='%s'></rwidget>\n",
-    element_id,
-    name,
-    json_data
-  )
-
-  message(.widget_lib)
-  tag
 }
 
 #' @export
-write_html <- function(tag) {
-  html <- readr::read_file(.template) %>%
-    stringr::str_replace("\\{\\{ rwidget \\}\\}", tag)
-  tmp_dir <- tempdir()
-  index_filename <- file.path(tmp_dir, "index.html")
+write_html <- function(widget, output_folder = tempdir()) {
+  html <- readr::read_file(get_file(CONFIG$template)) %>%
+    stringr::str_replace("\\{\\{ rwidget \\}\\}", make_widget_tag(widget))
+  index_filename <- file.path(output_folder, "index.html")
   readr::write_file(html, index_filename)
-  file.copy(.widget_lib, tmp_dir, overwrite = TRUE)
+  file.copy(get_file(CONFIG$lib), output_folder, overwrite = TRUE)
   index_filename
+}
+
+make_widget_tag <- function(widget) {
+  json_data <- jsonlite::toJSON(widget$dataset, auto_unbox = TRUE)
+  sprintf(
+    "<rwidget id='%s' class='rwidget-%s' data-widget-data='%s'></rwidget>",
+    widget$element_id,
+    widget$name,
+    json_data
+  )
 }
