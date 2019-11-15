@@ -1,10 +1,11 @@
 #' @export
-make_widget <- function(name, data, element_id) {
+make_widget <- function(name, data, element_id, script) {
   structure(
     list(
       name = name,
       element_id = element_id,
-      dataset = data
+      dataset = data,
+      script = script
     ),
     class = "rwidget"
   )
@@ -16,7 +17,7 @@ write_html <- function(widget, output_folder = tempdir()) {
     stringr::str_replace("\\{\\{ rwidget \\}\\}", make_widget_tag(widget))
   index_filename <- file.path(output_folder, "index.html")
   readr::write_file(html, index_filename)
-  file.copy(get_file(CONFIG$lib), output_folder, overwrite = TRUE)
+  file.copy(c(get_file(CONFIG$lib), widget$script), output_folder, overwrite = TRUE)
   index_filename
 }
 
@@ -29,10 +30,15 @@ make_widget_tag <- function(widget) {
   #  widget$name,
   #  json_data
   #)
-  htmltools::tags$script(
+  data_tag <- htmltools::tags$script(
     type = "rwidget",
     id = paste0("data-", widget$element_id),
     class = paste("rwidget", widget$name),
     json_data
+  )
+  lib_tag <- htmltools::tags$script(src = basename(widget$script))
+  htmltools::tagList(
+    data_tag,
+    lib_tag
   ) %>% as.character()
 }
