@@ -86,14 +86,50 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn this;\n})();\n\ntry {\n\t// This works if eval is allowed (see CSP)\n\tg = g || new Function(\"return this\")();\n} catch (e) {\n\t// This works if the window reference is available\n\tif (typeof window === \"object\") g = window;\n}\n\n// g can still be undefined, but nothing to do about it...\n// We return undefined, instead of nothing here, so it's\n// easier to handle this case. if(!global) { ...}\n\nmodule.exports = g;\n\n\n//# sourceURL=webpack:///(webpack)/buildin/global.js?");
+
+/***/ }),
+
+/***/ "./src/config.js":
+/*!***********************!*\
+  !*** ./src/config.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  widgetTag: \"rwidget\"\n});\n\n\n//# sourceURL=webpack:///./src/config.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("console.log(\"Pipe data from R to JavaScript.\");\n\n\n//# sourceURL=webpack:///./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./config */ \"./src/config.js\");\n/* harmony import */ var _test_widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./test-widget */ \"./src/test-widget.js\");\n\n\n\nconsole.log(\"Pipe data from R to JavaScript.\");\n\nconst widgets = { };\n\n/**\n * Register a widget object\n * @param props properties\n * @param props.name class/widget name\n * @param props.type class or factory function\n * ...\n */\nfunction register(props) {\n  widgets[props.name] = props;\n}\n\nfunction getData(widgetDataElement) {\n  const data = JSON.parse(widgetDataElement.dataset.widgetData);\n  return {\n    id: widgetDataElement.id,\n    name: widgetDataElement.className.replace(`${_config__WEBPACK_IMPORTED_MODULE_0__[\"default\"].widgetTag}-`, \"\"),\n    widgetData: data\n  };\n}\n\nfunction make(widgetDataElement) {\n  const data = getData(widgetDataElement);\n  const widgetElement = document.createElement(\"div\");\n  widgetElement.id = data.id;\n  document.body.appendChild(widgetElement);\n  return { data: data.widgetData, widgetElement: widgetElement };\n}\n\nfunction run(test) {\n  if (test) {\n    const widgetDataElement = document.getElementsByTagName(\"rwidget\")[0];\n    const args = make(widgetDataElement);\n    const widget = Object(_test_widget__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(args.widgetElement);\n    widget.render(args.data);\n    return;\n  }\n}\n\nglobal.rwidget = {\n  register: register,\n  getData: getData,\n  make: make,\n  run: run\n};\n\nglobal._rwidget = {\n  widgets: widgets\n};\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/test-widget.js":
+/*!****************************!*\
+  !*** ./src/test-widget.js ***!
+  \****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (function(widgetElement) {\n  const widget = { };\n\n  widget.render = function(widgetData) {\n    console.log(widgetElement.id);\n    console.log(widgetData);\n    widgetElement.innerText = \"Hello widget!\";\n  };\n\n  return widget;\n\n});\n\n\n//# sourceURL=webpack:///./src/test-widget.js?");
 
 /***/ })
 
