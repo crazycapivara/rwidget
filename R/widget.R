@@ -14,9 +14,16 @@ make_widget <- function(name, script, data, element_id, external_scripts = NULL)
 
 #' @export
 write_html <- function(widget, output_folder = tempdir()) {
-  html <- readr::read_file(get_file(CONFIG$template)) %>%
-    stringr::str_replace("<!-- head -->", make_head(widget)) %>%
-    stringr::str_replace("\\{\\{ rwidget \\}\\}", make_widget_tag(widget))
+  #html <- readr::read_file(get_file(CONFIG$template)) %>%
+  #  stringr::str_replace("<!-- head -->", make_head(widget)) %>%
+  #  stringr::str_replace("\\{\\{ rwidget \\}\\}", make_widget_tag(widget))
+  html <- render_template(
+    get_file(CONFIG$template),
+    list(
+      head = make_head(widget),
+      rwidget = make_widget_tag(widget)
+    )
+  )
   index_filename <- file.path(output_folder, "index.html")
   readr::write_file(html, index_filename)
   file.copy(c(get_file(CONFIG$lib), widget$script), output_folder, overwrite = TRUE)
