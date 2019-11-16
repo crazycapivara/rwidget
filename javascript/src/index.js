@@ -7,7 +7,9 @@ global.rwidget = rwidget;
 // Register test widget
 rwidget.register({
   name: "test",
-  type: testWidget
+  type: testWidget,
+  scripts: [ "https://unpkg.com/mapbox-gl/dist/mapbox-gl.js" ],
+  styles: [ "https://unpkg.com/mapbox-gl/dist/mapbox-gl.css" ]
 });
 
 const sources = [
@@ -16,9 +18,8 @@ const sources = [
   { src: "https://unpkg.com/mapbox-gl/dist/mapbox-gl.css", tag: "link" }
 ];
 
-Promise.all(sources.map(item => addScript2Head(item.src, item.tag)))
-  .then(values => console.log(values));
-// .catch(src => console.log(`${src} NOT loaded`));
+// Promise.all(sources.map(item => addScript2Head(item.src, item.tag)))
+//  .then(values => console.log(values));
 
 document.addEventListener("DOMContentLoaded", (e) => {
   const scriptElements = document.getElementsByClassName("rwidget");
