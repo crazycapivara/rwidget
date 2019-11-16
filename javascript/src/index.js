@@ -11,11 +11,12 @@ rwidget.register({
 });
 
 const sources = [
-  "https://unpkg.com/deck.gl/dist.min.js",
-  "https://unpkg.com/mapbox-gl/dist/mapbox-gl.js"
+  { src: "https://unpkg.com/deck.gl/dist.min.js", tag: "script" },
+  { src: "https://unpkg.com/mapbox-gl/dist/mapbox-gl.js", tag: "script" },
+  { src: "https://unpkg.com/mapbox-gl/dist/mapbox-gl.css", tag: "link" }
 ];
 
-Promise.all(sources.map(src => addScript2Head(src)))
+Promise.all(sources.map(item => addScript2Head(item.src, item.tag)))
   .then(values => console.log(values));
 // .catch(src => console.log(`${src} NOT loaded`));
 
