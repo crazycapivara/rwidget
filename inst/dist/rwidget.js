@@ -105,7 +105,7 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _rwidget__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rwidget */ \"./src/rwidget.js\");\n/* harmony import */ var _test_widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./test-widget */ \"./src/test-widget.js\");\n\n\n\nglobal.rwidget = _rwidget__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n\n// Register test widget\n_rwidget__WEBPACK_IMPORTED_MODULE_0__[\"default\"].register({\n  name: \"test\",\n  type: _test_widget__WEBPACK_IMPORTED_MODULE_1__[\"default\"]\n});\n\ndocument.addEventListener('DOMContentLoaded', (e) => {\nconst scriptElements = document.getElementsByClassName(\"rwidget\");\n  for (let i = 0; i < scriptElements.length; i++) {\n    _rwidget__WEBPACK_IMPORTED_MODULE_0__[\"default\"].make(scriptElements[i]);\n  }\n});\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _rwidget__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rwidget */ \"./src/rwidget.js\");\n/* harmony import */ var _test_widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./test-widget */ \"./src/test-widget.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils */ \"./src/utils.js\");\n\n\n\n\nglobal.rwidget = _rwidget__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n\n// Register test widget\n_rwidget__WEBPACK_IMPORTED_MODULE_0__[\"default\"].register({\n  name: \"test\",\n  type: _test_widget__WEBPACK_IMPORTED_MODULE_1__[\"default\"]\n});\n\nconst sources = [\n  \"https://unpkg.com/deck.gl/dist.min.js\",\n  \"https://unpkg.com/mapbox-gl/dist/mapbox-gl.js\"\n];\n\nPromise.all(sources.map(src => Object(_utils__WEBPACK_IMPORTED_MODULE_2__[\"addScript2Head\"])(src)))\n  .then(values => console.log(values));\n// .catch(src => console.log(`${src} NOT loaded`));\n\ndocument.addEventListener(\"DOMContentLoaded\", (e) => {\n  const scriptElements = document.getElementsByClassName(\"rwidget\");\n    for (let i = 0; i < scriptElements.length; i++) {\n      _rwidget__WEBPACK_IMPORTED_MODULE_0__[\"default\"].make(scriptElements[i]);\n    }\n});\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -130,6 +130,18 @@ eval("__webpack_require__.r(__webpack_exports__);\nconst widgets = { };\n\n/**\n
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (function(widgetElement) {\n  const widget = { };\n\n  widget.render = function(widgetData) {\n    console.log(widgetElement.id);\n    console.log(widgetData);\n    widgetElement.innerText = \"Hello widget!\";\n  };\n\n  return widget;\n});\n\n\n//# sourceURL=webpack:///./src/test-widget.js?");
+
+/***/ }),
+
+/***/ "./src/utils.js":
+/*!**********************!*\
+  !*** ./src/utils.js ***!
+  \**********************/
+/*! exports provided: addScript2Head */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"addScript2Head\", function() { return addScript2Head; });\nfunction addScript2Head(src) {\n  return new Promise(function(resolve, reject) {\n    const element = document.createElement(\"script\");\n    element.src = src;\n    element.onload = () => resolve(src);\n    element.onerror = () => reject(src);\n    document.head.appendChild(element);\n  });\n}\n\n\n\n//# sourceURL=webpack:///./src/utils.js?");
 
 /***/ })
 
