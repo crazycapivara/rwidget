@@ -1,6 +1,6 @@
 /**
- * Add a source (lib or stylesheet) to the docuemnt head
- * @param src source that will be add to the document head
+ * Add a source (lib or stylesheet) to the document head
+ * @param src source that will be added to the document head
  * @param src.url url of the source
  * @param src.tag tag type of the source, either 'script' or 'link' (stylesheet)
  */

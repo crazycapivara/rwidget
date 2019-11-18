@@ -1,11 +1,15 @@
 #' @export
-make_widget <- function(name, script, data, element_id, external_scripts = NULL) {
+make_widget <- function(name, script, data, element_id, external_scripts = NULL, width = NA, height = NA) {
   structure(
     list(
       name = name,
       script = script,
       element_id = element_id,
-      dataset = data,
+      dataset = list(
+        widgetData = data,
+        width = width,
+        height = height
+      ),
       external_scripts = external_scripts
     ),
     class = "rwidget"
