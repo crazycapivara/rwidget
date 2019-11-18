@@ -32,7 +32,7 @@ function make(scriptElement) {
   widgetElement.id = scriptElement.id.replace("data-", "");
   document.body.appendChild(widgetElement);
   const makeWidget = widgets[widgetName].type;
-  makeWidget(widgetElement).render(data);
+  new makeWidget(widgetElement).render(data);
 }
 
 export default {
