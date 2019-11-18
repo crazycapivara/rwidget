@@ -20,12 +20,15 @@ const sources = [
   { url: "https://unpkg.com/mapbox-gl/dist/mapbox-gl.css", tag: "link" }
 ];
 
-Promise.all(sources.map(src => addSource2Head(src)))
-  .then(values => console.log(values));
+//Promise.all(rwidget.cfg.sources.map(src => addSource2Head(src)))
+// rwidget.addSources().then(values => console.log(values));
 
 document.addEventListener("DOMContentLoaded", (e) => {
-  const scriptElements = document.getElementsByClassName("rwidget");
+  rwidget.addSources().then(values => {
+    console.log(values);
+    const scriptElements = document.getElementsByClassName("rwidget");
     for (let i = 0; i < scriptElements.length; i++) {
       rwidget.make(scriptElements[i]);
     }
+  });
 });

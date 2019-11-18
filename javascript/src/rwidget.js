@@ -1,3 +1,5 @@
+import { addSource2Head } from "./utils";
+
 const widgets = { };
 const cfg = { sources: [ ] };
 
@@ -12,6 +14,10 @@ function register(props) {
   props.sources = props.sources || [ ];
   cfg.sources = cfg.sources.concat(props.sources);
   widgets[props.name] = props;
+}
+
+function addSources() {
+  return Promise.all(cfg.sources.map(src => addSource2Head(src)));
 }
 
 function make(scriptElement) {
@@ -31,6 +37,7 @@ function make(scriptElement) {
 
 export default {
   register: register,
+  addSources: addSources,
   make: make,
   widgets: widgets,
   cfg: cfg
