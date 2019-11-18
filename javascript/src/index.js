@@ -7,11 +7,13 @@ global.rwidget = rwidget;
 // Register test widget
 rwidget.register({
   name: "test",
-  type: testWidget,
+  type: testWidget
+  /*
   sources: [
     { url: "https://unpkg.com/mapbox-gl/dist/mapbox-gl.js", tag: "script" },
     { url: "https://unpkg.com/mapbox-gl/dist/mapbox-gl.css", tag: "link" }
-  ],
+  ]
+  */
 });
 
 const sources = [

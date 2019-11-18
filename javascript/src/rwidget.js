@@ -30,9 +30,11 @@ function make(scriptElement) {
 
   const widgetElement = document.createElement("div");
   widgetElement.id = scriptElement.id.replace("data-", "");
+  widgetElement.style.width = data.width || "";
+  widgetElement.style.height = data.height || "";
   document.body.appendChild(widgetElement);
   const makeWidget = widgets[widgetName].type;
-  new makeWidget(widgetElement).render(data);
+  new makeWidget(widgetElement).render(data.widgetData);
 }
 
 export default {
