@@ -5,7 +5,7 @@ hello_world_widget <- function(msg, element_id = "hello") {
     element_id = element_id,
     data = list(
       message = msg
-    ),
-    external_scripts = c("https://unpkg.com/lodash@4.16.6")
+    )
+    # , external_scripts = c("https://unpkg.com/lodash@4.16.6")
   )
 }

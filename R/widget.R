@@ -1,5 +1,5 @@
 #' @export
-make_widget <- function(name, script, data, element_id = NULL, external_scripts = NULL, width = NA, height = NA) {
+make_widget <- function(name, script, data, element_id = NULL, width = NA, height = NA) {
   if (is.null(element_id)) element_id <- get_random_name()
 
   structure(
@@ -11,8 +11,7 @@ make_widget <- function(name, script, data, element_id = NULL, external_scripts 
         widgetData = data,
         width = width,
         height = height
-      ),
-      external_scripts = external_scripts
+      )
     ),
     class = "rwidget"
   )
@@ -34,7 +33,7 @@ as_html <- function(widget, template = NULL) {
   render_template(
     template,
     list(
-      head = make_head(widget),
+      # head = make_head(widget),
       rwidget = make_widget_tag(widget)
     )
   )
