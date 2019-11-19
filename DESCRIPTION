@@ -1,7 +1,7 @@
 Package: rwidget
-Title: Pipe data from R to JavaScript libs.
-Version: 0.0.0.9000
-Date: 2019-11-14
+Title: Pipe data from R to JavaScript libs
+Version: 0.1.0
+Date: 2019-11-19
 Authors@R: person("Stefan", "Kuethe", email = "crazycapivara@gmail.com", role = c("aut", "cre"))
 Maintainer: Stefan Kuethe <crazycapivara@gmail.com>
 Description: Makes your R data available in JavaScript libs.
@@ -9,7 +9,8 @@ Imports:
   magrittr,
   readr,
   jsonlite,
-  htmltools
+  htmltools,
+  stringr
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

@@ -5,7 +5,7 @@ print.rwidget <- function(widget) {
   print(filename)
   viewer <- getOption("viewer")
   if (is.null(viewer)) {
-    browseURL(filename)
+    utils::browseURL(filename)
   } else {
     viewer(filename)
   }
