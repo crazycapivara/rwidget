@@ -1,5 +1,7 @@
 #' @export
-make_widget <- function(name, script, data, element_id, external_scripts = NULL, width = NA, height = NA) {
+make_widget <- function(name, script, data, element_id = NULL, external_scripts = NULL, width = NA, height = NA) {
+  if (is.null(element_id)) element_id <- get_random_name()
+
   structure(
     list(
       name = name,

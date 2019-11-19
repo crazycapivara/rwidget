@@ -1,4 +1,4 @@
-chartist <- function(x, y, type = "Line", element_id = "chartist-chart") {
+chartist <- function(x, y, type = "Line", element_id = NULL) {
   make_widget(
     name = "chartist",
     script = system.file("examples/widgets/chartist-widget.js", package = "rwidget"),
